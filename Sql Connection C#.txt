@@ -1,0 +1,69 @@
+using MySql.Data;
+using MySql.Data.MySqlClient;
+
+public void showData()
+        {
+
+            MySqlConnection dt = new MySqlConnection("Server= 127.0.0.1;Database=csk;" + "User ID= root;PASSWORD=qweasdzxc123");
+
+            dt.Open();
+            MySqlDataAdapter my = new MySqlDataAdapter("SELECT * FROM kitapcs", dt);
+            DataTable d = new DataTable();
+            my.Fill(d);
+            dataGridView1.Rows.Clear();
+            foreach (DataRow item in d.Rows)
+            {
+                int r = dataGridView1.Rows.Add();
+                dataGridView1.Rows[r].Cells[0].Value = item["Numara"].ToString();
+                dataGridView1.Rows[r].Cells[1].Value = item["KitapÝsmi"].ToString();
+                dataGridView1.Rows[r].Cells[2].Value = item["Yazarý"].ToString();
+                dataGridView1.Rows[r].Cells[3].Value = item["Türü"].ToString();
+                dataGridView1.Rows[r].Cells[4].Value = item["Konum"].ToString();
+            }
+        }
+
+ private void btnAdd_Click(object sender, EventArgs e)
+        {
+            MySqlConnection dt = new MySqlConnection("Server= 127.0.0.1;Database=csk;" + "User ID= root;PASSWORD=qweasdzxc123");
+
+            dt.Open();
+
+            var com = ""; //select cart curt
+
+            com = "INSERT INTO kitapcs (Numara,KitapÝsmi,Yazarý,Türü,Konum) VALUES('" + textBox4.Text + "'," +
+                "'" + txtVeriGirisi.Text + "','" + textBox1.Text + "','" + textBox2.Text + "','" + textBox3.Text + "')";
+
+
+            MySqlCommand command = dt.CreateCommand();
+            command.CommandText = com;
+            command.ExecuteNonQuery();
+
+            dt.Close();
+
+
+
+
+            showData();
+        }
+       
+ MySqlConnection dt = new MySqlConnection("Server= 127.0.0.1;Database=csk;" + "User ID= root;PASSWORD=qweasdzxc123");
+
+            dt.Open();
+            //MySqlDataAdapter my = new MySqlDataAdapter("SELECT * FROM studentýnfo", dt);
+
+
+            //DELETE FROM Customers WHERE CustomerName = 'Alfreds Futterkiste';
+            var com = "DELETE FROM kitapcs WHERE Numara  = ('" + textBox5.Text + "')";
+
+
+
+            MySqlCommand command = dt.CreateCommand();
+            command.CommandText = com;
+            command.ExecuteNonQuery();
+
+            dt.Close();
+            showData();
+            textBox5.Clear();
+        }
+
+  var com = "DELETE FROM studentýnfo WHERE Number  = ('" + textBox5.Text + "')";
